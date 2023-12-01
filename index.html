@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Boboss" />
+  <title>Cult of the Lamb save files Encryptor/Decryptor</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <script src="app.js"></script>
+</head>
+
+<body>
+
+  <h1>Cult of the Lamb save files Encryptor/Decryptor</h1>
+
+  <p>This project serves as an encryptor/decryptor for the save files of <a
+      href="https://massivemonster.co/games/cult-of-the-lamb">Cult of the Lamb</a>.
+
+  <div id="uploadContainer">
+    <label for="fileInput">Upload Files</label>
+    <input type="file" id="fileInput" onchange="processUploadedFiles(this.files)" accept=".json" multiple />
+
+    <div id="dropArea" ondragover="handleDragOver(event)" ondragleave="handleDragLeave()" ondrop="handleDrop(event)"
+      onclick="triggerFileInput()">
+      Drag and drop save files to decrypt or encrypt here.
+    </div>
+  </div>
+
+  <h2>Important Note</h2>
+  <p>Before using this web app, make sure to create a backup of your save files. On Windows, these files are located
+    under <code>%UserProfile%\AppData\LocalLow\Massive Monster\Cult Of The Lamb\saves</code>.</p>
+
+  <p>The save files consist of the following:</p>
+  <ul>
+    <li><code>slot_&lt;number&gt;.json</code></li>
+    <li><code>meta_&lt;number&gt;.json</code></li>
+  </ul>
+
+  <p><code>&lt;number&gt;</code> corresponds to the save slot, with the first slot labeled as 0, and subsequent
+    slots incrementing accordingly.</p>
+
+  <h2>Usage Instructions</h2>
+  <ol>
+    <li><strong>Upload Files:</strong> Begin by uploading the files you wish to encrypt or decrypt.</li>
+    <li><strong>Decryption Process:</strong> The tool will generate decrypted files for you to work with. It is
+      essential not to rename these decrypted files.</li>
+    <li><strong>Edit Decrypted Files:</strong> Once you have finished editing your decrypted files, you can proceed to
+      reencrypt them.</li>
+    <li><strong>Reencryption:</strong> Simply upload the edited files on the provided page to reencrypt them.</li>
+    <li><strong>Insert the reencrypted files in your save folder.</strong> You can change the
+      <code>&lt;number&gt;</code>.
+    </li>
+  </ol>
+
+  <h2>Project Reference</h2>
+
+  <p>Special thanks to <a href="https://github.com/Moonkis/CoTLMindReader">CoTLMindReader</a> by Moonkis. I transposed to native javascript the decryption/encryption algorithm he wrote in C#.</p>
+
+  <script>
+    function handleDragOver(event) {
+      event.preventDefault();
+      document.getElementById("dropArea").classList.add("highlight");
+    }
+
+    function handleDragLeave() {
+      document.getElementById("dropArea").classList.remove("highlight");
+    }
+
+    function handleDrop(event) {
+      event.preventDefault();
+      document.getElementById("dropArea").classList.remove("highlight");
+      const files = event.dataTransfer.files;
+      processUploadedFiles(files);
+    }
+
+    function triggerFileInput() {
+      document.getElementById("fileInput").click();
+    }
+  </script>
+</body>
+
+</html>
